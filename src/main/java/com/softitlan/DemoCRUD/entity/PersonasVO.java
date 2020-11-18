@@ -1,19 +1,18 @@
 package com.softitlan.DemoCRUD.entity;
 import java.io.Serializable;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Column;
+import javax.persistence.*;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import javax.persistence.NamedQueries;
 
 import java.util.Date;
 @Entity
 @Table(name= "personas")
+@NamedQueries({
+		@NamedQuery(name = "PersonasVO.findAllActive", query = "select p from PersonasVO p where p.status = 1")
+})
 public class PersonasVO implements Serializable{
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")

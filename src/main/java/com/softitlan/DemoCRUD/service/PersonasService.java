@@ -8,4 +8,5 @@ public interface PersonasService{
 	void update(Integer id, Map<String,Object> data) throws Exception;
 	void delete(Integer id) throws Exception;
 	List<PersonasVO> findAll() throws Exception;
+	List<PersonasVO> findAllActive() throws Exception;
 }

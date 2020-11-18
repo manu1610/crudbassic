@@ -9,6 +9,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -44,7 +46,6 @@ public class PersonasServiceImpl implements PersonasService{
 	}
 	@Override
 	public void update(Integer id, Map<String,Object> data) throws Exception{
-
 		LOGGER.debug(">>>> update->id: {}, personas: {}",id,data);
 		try{
 			Optional<PersonasVO> personasOptional = personasRepository.findById(id);
@@ -52,6 +53,8 @@ public class PersonasServiceImpl implements PersonasService{
 				throw new Exception("No existe el registro");
 			}
 			//name
+
+			LOGGER.debug("birthdate:{}", data.get("birthdate"));
 			if(data.containsKey("name")){
 				String name = data.get("name").toString();
 				personasOptional.get().setName(name);
@@ -68,7 +71,7 @@ public class PersonasServiceImpl implements PersonasService{
 			}
 			//birthdate
 			if(data.containsKey("birthdate")){
-				Date birthdate = (Date)data.get("birthdate");
+				Date birthdate = new SimpleDateFormat("yyyy-MM-dd").parse((String) data.get("birthdate"));
 				personasOptional.get().setBirthdate(birthdate);
 			}
 			//gender
@@ -138,5 +141,20 @@ public class PersonasServiceImpl implements PersonasService{
 		LOGGER.debug(">>>> findAll <<<< personasList: {}", personasVOList);
 		return personasVOList;
 	}
+
+	@Override
+	public List<PersonasVO> findAllActive() throws Exception {
+		LOGGER.debug(">>>> findAll <<<<");
+		List<PersonasVO> personasVOList =null;
+		try{
+			personasVOList = personasRepository.findAllActive();
+		}catch (Exception e){
+			LOGGER.error("Exception: {}",e);
+			throw new Exception(e);
+		}
+		LOGGER.debug(">>>> findAll <<<< personasList: {}", personasVOList);
+		return personasVOList;
+	}
+
 
 }

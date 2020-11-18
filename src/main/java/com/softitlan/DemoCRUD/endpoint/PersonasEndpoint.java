@@ -69,7 +69,7 @@ public class PersonasEndpoint{
 		ResponseEntity<ResponseBody<List<PersonasVO>>> response=null;
 		List<PersonasVO> personasVOList =null;
 		try{
-			personasVOList =personasService.findAll();
+			personasVOList =personasService.findAllActive();
 			response=Utils.<List<PersonasVO>>response(HttpStatus.OK,"Lista enonctrda", personasVOList);
 		}catch (Exception e){
 			response=Utils.<List<PersonasVO>>response(HttpStatus.NOT_FOUND,"Lista enonctrda", personasVOList);
